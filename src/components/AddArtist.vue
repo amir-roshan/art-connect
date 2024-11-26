@@ -12,23 +12,44 @@
         type="text"
         v-model="artistName"
         placeholder="Artist Name"
-        required
+        :class="{ invalid: errors.artistName && touched.artistName }"
+        @blur="touched.artistName = true"
+        @input="validateArtistName"
       /><br />
+      <span v-if="errors.artistName && touched.artistName" class="error">{{
+        errors.artistName
+      }}</span>
       <input
         class="add-artist__input"
         type="text"
         v-model="aboutArtist"
         placeholder="About Artist"
-        required
+        :class="{ invalid: errors.aboutArtist && touched.aboutArtist }"
+        @blur="touched.aboutArtist = true"
+        @input="validateAboutArtist"
       /><br />
+      <span v-if="errors.aboutArtist && touched.aboutArtist" class="error">{{
+        errors.aboutArtist
+      }}</span>
       <input
         class="add-artist__input"
         type="text"
         v-model="imgUrl"
         placeholder="Image URL"
-        required
+        :class="{ invalid: errors.imgUrl && touched.imgUrl }"
+        @blur="touched.imgUrl = true"
+        @input="validateImgUrl"
       /><br />
-      <button class="artist-input__btn" @click="addYourArtist">Add</button>
+      <span v-if="errors.imgUrl && touched.imgUrl" class="error">{{
+        errors.imgUrl
+      }}</span>
+      <button
+        class="artist-input__btn"
+        @click="addYourArtist"
+        :disabled="hasErrors"
+      >
+        Add
+      </button>
     </div>
   </div>
 </template>
@@ -44,6 +65,16 @@ export default {
       artistName: "",
       aboutArtist: "",
       imgUrl: "",
+      errors: {
+        artistName: "",
+        aboutArtist: "",
+        imgUrl: "",
+      },
+      touched: {
+        artistName: false,
+        aboutArtist: false,
+        imgUrl: false,
+      },
     };
   },
   methods: {
@@ -52,6 +83,15 @@ export default {
     },
 
     addYourArtist() {
+      if (!this.hasErrors) {
+        console.log({
+          artistName: this.artistName,
+          aboutArtist: this.aboutArtist,
+          imgUrl: this.imgUrl,
+        });
+      } else {
+        return;
+      }
       this.artists.push({
         name: this.artistName,
         about: this.aboutArtist,
@@ -68,6 +108,47 @@ export default {
       this.aboutArtist = "";
       this.imgUrl = "";
     },
+
+    validateArtistName() {
+      if (!this.artistName.trim()) {
+        this.errors.artistName = "Artist name is required.";
+      } else if (this.artistName.length < 3) {
+        this.errors.artistName =
+          "Artist name must be at least 3 characters long.";
+      } else {
+        this.errors.artistName = "";
+      }
+    },
+    validateAboutArtist() {
+      if (!this.aboutArtist.trim()) {
+        this.errors.aboutArtist = "About artist is required.";
+      } else if (this.aboutArtist.length < 5) {
+        this.errors.aboutArtist =
+          "About artist must be at least 5 characters long.";
+      } else {
+        this.errors.aboutArtist = "";
+      }
+    },
+    validateImgUrl() {
+      const urlPattern = /^(http|https):\/\/[^ "]+$/;
+      if (!this.imgUrl.trim()) {
+        this.errors.imgUrl = "Image URL is required.";
+      } else if (!urlPattern.test(this.imgUrl)) {
+        this.errors.imgUrl = "Please enter a valid URL.";
+      } else {
+        this.errors.imgUrl = "";
+      }
+    },
+  },
+  computed: {
+    hasErrors() {
+      return (
+        !this.artistName ||
+        !this.aboutArtist ||
+        !this.imgUrl ||
+        Object.values(this.errors).some((error) => error !== "")
+      );
+    },
   },
 };
 </script>
@@ -75,5 +156,8 @@ export default {
 <style>
 #app {
   color: #0f0f00;
+}
+span {
+  display: block;
 }
 </style>
