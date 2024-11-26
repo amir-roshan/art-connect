@@ -1,5 +1,5 @@
 <template>
-  <AddArtist @artist="handleArtistData" />
+  <AddArtist @artist="handleArtistData" @filter-search="handleFilterArtist" />
   <ArtistCard @delete-artist="handleDeleteArtist" :artists="artists" />
 </template>
 
@@ -36,7 +36,11 @@ export default {
           id: "__id-90212134",
         },
       ],
+      originalArtists: [],
     };
+  },
+  created() {
+    this.originalArtists = this.artists;
   },
   components: {
     AddArtist,
@@ -52,6 +56,18 @@ export default {
       this.artists = this.artists.filter(
         (artist) => artist.id != receivedArtists.id
       );
+    },
+
+    handleFilterArtist(words) {
+      const filteredArtists = this.originalArtists.filter((artist) =>
+        artist.name.toLowerCase().includes(words.toLowerCase())
+      );
+
+      this.artists = filteredArtists;
+
+      if (words === "") {
+        this.artists = this.originalArtists;
+      }
     },
   },
 };

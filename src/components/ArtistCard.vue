@@ -5,6 +5,9 @@
       {{ artist.name }} {{ artist.about }}
       <button @click="() => deletArtist(artist.id)">DELETE</button>
     </li>
+    <li v-if="artists.length === 0">
+      <h2>Oh no, your artist is not found :(</h2>
+    </li>
   </ul>
 </template>
 

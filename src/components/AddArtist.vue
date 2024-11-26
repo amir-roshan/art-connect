@@ -4,6 +4,7 @@
       class="artist-search__input"
       type="text"
       placeholder="Search your artist"
+      @input="filterArtist"
     />
     <button class="artist-input__btn" @click="addArtist">Add Artist</button>
     <div v-if="showArtist === true">
@@ -78,6 +79,11 @@ export default {
     };
   },
   methods: {
+    filterArtist(event) {
+      const filterValue = event.target.value;
+      this.$emit("filter-search", filterValue);
+    },
+
     addArtist() {
       this.showArtist = !this.showArtist;
     },
