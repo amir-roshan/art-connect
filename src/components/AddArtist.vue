@@ -205,6 +205,7 @@ span {
   border-radius: 25px;
   cursor: pointer;
   margin-left: 10px;
+  margin-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
@@ -289,5 +290,18 @@ span {
   font-size: 0.9em;
   margin: -5px 0 5px;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .artist-search__input {
+    width: 60%;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .artist-input__btn {
+    margin-left: 0;
+  }
 }
 </style>

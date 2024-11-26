@@ -2,7 +2,10 @@
   <ul class="card__container">
     <li v-for="artist in artists" :key="artist.id">
       <img :src="artist.url" :alt="`Image of ${artist.name}.`" />
-      {{ artist.name }} {{ artist.about }}
+      <div class="info">
+        <h3>{{ artist.name }}</h3>
+        <p>{{ artist.about }}</p>
+      </div>
       <button @click="() => deletArtist(artist.id)">DELETE</button>
     </li>
     <li v-if="artists.length === 0">
@@ -102,5 +105,35 @@ li button:hover {
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: auto;
+}
+
+@media (max-width: 968px) {
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card__container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 410px) {
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card__container {
+    width: 80%;
+  }
+
+  li {
+    flex-direction: column;
+  }
+
+  li button {
+    margin-left: 0;
+  }
 }
 </style>
