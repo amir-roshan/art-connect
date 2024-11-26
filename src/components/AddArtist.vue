@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       // Here is a model.
-      artists: [],
+      artists: {},
       showArtist: false,
       artistName: "",
       aboutArtist: "",
@@ -92,14 +92,15 @@ export default {
       } else {
         return;
       }
-      this.artists.push({
+      this.artist = {
         name: this.artistName,
         about: this.aboutArtist,
         url: this.imgUrl,
-      });
+        id: `__id-${Math.floor(Math.random() * 1_000_000)}`,
+      };
 
-      console.log(this.artists);
-
+      console.log(this.artist);
+      this.$emit("artists", this.artist);
       this.refreshInput();
     },
 

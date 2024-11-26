@@ -1,17 +1,19 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+  <ul class="card__container">
+    <li v-for="artist in artists" :key="artist.id">
+      {{ artist.name }} {{ artist.about }}
+    </li>
+  </ul>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
-  data() {
-    return {
-      // Here is a model.
-      msg: "Welcome to Your Vue.js App",
-    };
+  name: "ArtistCard",
+  props: {
+    artists: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
