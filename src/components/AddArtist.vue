@@ -100,7 +100,7 @@ export default {
       };
 
       console.log(this.artist);
-      this.$emit("artists", this.artist);
+      this.$emit("artist", this.artist);
       this.refreshInput();
     },
 

@@ -1,7 +1,9 @@
 <template>
   <ul class="card__container">
     <li v-for="artist in artists" :key="artist.id">
+      <img :src="artist.url" :alt="`Image of ${artist.name}.`" />
       {{ artist.name }} {{ artist.about }}
+      <button @click="() => deletArtist(artist.id)">DELETE</button>
     </li>
   </ul>
 </template>
@@ -13,6 +15,12 @@ export default {
     artists: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    deletArtist(id) {
+      const artist = this.artists.find((artist) => artist.id === id);
+      this.$emit("delete-artist", artist);
     },
   },
 };

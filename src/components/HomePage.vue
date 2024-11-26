@@ -1,6 +1,6 @@
 <template>
-  <AddArtist @artists="handleArtistsData" />
-  <ArtistCard :artists="artists" />
+  <AddArtist @artist="handleArtistData" />
+  <ArtistCard @delete-artist="handleDeleteArtist" :artists="artists" />
 </template>
 
 <script>
@@ -43,9 +43,15 @@ export default {
     ArtistCard,
   },
   methods: {
-    handleArtistsData(receivedArtists) {
+    handleArtistData(receivedArtists) {
       this.artists.push(receivedArtists);
       console.log("data arrived:", this.artists);
+    },
+
+    handleDeleteArtist(receivedArtists) {
+      this.artists = this.artists.filter(
+        (artist) => artist.id != receivedArtists.id
+      );
     },
   },
 };
